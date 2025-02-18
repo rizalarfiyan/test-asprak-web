@@ -31,4 +31,11 @@ class Students {
 		$this->db->bind('hobby', $data['hobby']);
 		$this->db->execute();
 	}
+
+	public function delete($id)
+	{
+		$this->db->query("DELETE FROM students WHERE nim = :id");
+		$this->db->bind('id', $id);
+		$this->db->execute();
+	}
 }

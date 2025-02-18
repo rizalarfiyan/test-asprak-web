@@ -63,10 +63,10 @@
                 </td>
                 <td class="px-6 py-4 whitespace-nowrap">
                     <div class="flex gap-2">
-                        <button hx-get="/student/delete?nim=<?= $student['nim'] ?>" hx-target="body" hx-swap="beforeend" class="px-2 py-1 cursor-pointer text-white text-sm bg-danger-500 rounded-md hover:bg-danger-600 transition-colors duration-300">
+                        <button hx-get="/student/delete/<?= $student['nim'] ?>" hx-target="body" hx-swap="beforeend" class="px-2 py-1 cursor-pointer text-white text-sm bg-danger-500 rounded-md hover:bg-danger-600 transition-colors duration-300">
                             Delete
                         </button>
-                        <button hx-get="/student/update?nim=<?= $student['nim'] ?>" hx-target="body" hx-swap="beforeend" class="px-2 py-1 cursor-pointer text-white text-sm bg-success-500 rounded-md hover:bg-success-600 transition-colors duration-300">
+                        <button hx-get="/student/update/<?= $student['nim'] ?>" hx-target="body" hx-swap="beforeend" class="px-2 py-1 cursor-pointer text-white text-sm bg-success-500 rounded-md hover:bg-success-600 transition-colors duration-300">
                             Edit
                         </button>
                     </div>

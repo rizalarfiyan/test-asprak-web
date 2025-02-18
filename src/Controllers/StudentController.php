@@ -96,8 +96,22 @@ class StudentController extends Controller
 		}
 	}
 
-	public function detail($id)
+	public function htmxDelete($id)
 	{
-		echo $id;
+		$this->renderHTMX('student/delete', [
+			'id' => $id,
+		]);
+	}
+
+	public function delete($id)
+	{
+		try {
+			$this->model('Students')->delete($id);
+			$this->successMessage('Student has been deleted.');
+		} catch(\Exception $e) {
+			$this->errorMessage('Failed to delete student.');
+		} finally {
+			$this->closeModal();
+		}
 	}
 }
