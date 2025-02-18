@@ -1,0 +1,18 @@
+{
+    "name": "rizalarfiyan/asprak",
+    "autoload": {
+        "psr-4": {
+            "App\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Rizal Arfiyan",
+            "email": "rizal.arfiyan.23@gmail.com"
+        }
+    ],
+	"scripts": {
+		"serve": "php -S localhost:8000 -t public"
+	},
+    "require": {}
+}
