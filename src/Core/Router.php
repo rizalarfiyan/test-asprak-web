@@ -7,12 +7,13 @@ class Router
     protected $routes = [];
 
 	protected $defaultValidation = [
-		'id' => '[1-9][0-9]*',
+		'id' => '[0-9]+',
 	];
 
-    private function addRoute($route, $controller, $action, $method, $isHtmx, $validation)
+    private function addRoute($route, $controller, $action, $method, $req, $isHtmx, $validation)
     {
         $this->routes[$method][$route] = [
+			'req' => $req,
 			'controller' => $controller,
 			'action' => $action,
 			'htmx' => $isHtmx,
@@ -22,27 +23,30 @@ class Router
 
 	public function get($route, $controller, $action, $isHtmx = false, $validation = null)
 	{
-		$this->addRoute($route, $controller, $action, "GET", $isHtmx, $validation);
+		$this->addRoute($route, $controller, $action, "GET", $_GET, $isHtmx, $validation);
 	}
 
 	public function post($route, $controller, $action, $isHtmx = false, $validation = null)
 	{
-		$this->addRoute($route, $controller, $action, "POST", $isHtmx, $validation);
+		$this->addRoute($route, $controller, $action, "POST", $_POST,  $isHtmx, $validation);
 	}
 
 	public function put($route, $controller, $action, $isHtmx = false, $validation = null)
 	{
-		$this->addRoute($route, $controller, $action, "PUT", $isHtmx, $validation);
+		parse_str(file_get_contents("php://input"), $_PUT);
+		$this->addRoute($route, $controller, $action, "PUT", $_PUT, $isHtmx, $validation);
 	}
 
 	public function patch($route, $controller, $action, $isHtmx = false, $validation = null)
 	{
-		$this->addRoute($route, $controller, $action, "PATCH", $isHtmx, $validation);
+		parse_str(file_get_contents("php://input"), $_PATCH);
+		$this->addRoute($route, $controller, $action, "PATCH", $_PATCH, $isHtmx, $validation);
 	}
 
 	public function delete($route, $controller, $action, $isHtmx = false, $validation = null)
 	{
-		$this->addRoute($route, $controller, $action, "DELETE", $isHtmx, $validation);
+		parse_str(file_get_contents("php://input"), $_DELETE);
+		$this->addRoute($route, $controller, $action, "DELETE", $_DELETE, $isHtmx, $validation);
 	}
 
 	public function dispatch()
@@ -66,7 +70,7 @@ class Router
 				$action = $params['action'];
 
 				$controller = new $controller();
-				call_user_func_array([$controller, $action], $matches);
+				call_user_func_array([$controller, $action], [...$matches, $params['req']]);
 				return;
 			}
 		}

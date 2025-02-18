@@ -10,6 +10,8 @@ $router->get('/student', StudentController::class, 'index');
 $router->post('/student', StudentController::class, 'create');
 $router->get('/student/table', StudentController::class, 'table', true);
 $router->get('/student/create', StudentController::class, 'htmxCreate', true);
+$router->get('/student/update/{id}', StudentController::class, 'htmxUpdate', true);
 $router->get('/student/delete/{id}', StudentController::class, 'htmxDelete', true);
+$router->put('/student/{id}', StudentController::class, 'update');
 $router->delete('/student/{id}', StudentController::class, 'delete');
 $router->dispatch();

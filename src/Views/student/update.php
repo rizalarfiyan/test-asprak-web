@@ -11,11 +11,11 @@
 		<h2 class="text-xl font-semibold pb-4 border-b border-secondary-200 mb-4">
 			Create Student
 		</h2>
-        <form class="mx-auto space-y-4" hx-post="/student" hx-on::after-request="htmx.trigger(htmx.find('body'), 'doReloadStudentTable')">
+        <form class="mx-auto space-y-4" hx-put="/student/<?= $id ?>" hx-on::after-request="htmx.trigger(htmx.find('body'), 'doReloadStudentTable')">
             <div class="flex items-center justify-between gap-4">
                 <div class="w-full space-y-2">
                     <label for="nim">NIM</label>
-                    <input type="number" id="nim" name="nim" placeholder="22115227" required/>
+                    <input type="number" id="nim" name="nim" placeholder="22115227" value="<?= $student['nim'] ?>" readonly disabled required/>
                 </div>
                 <div class="w-full space-y-2">
                     <span class="label">Gender</span>
@@ -23,7 +23,7 @@
                         <?php foreach ($genders as $gender): ?>
                             <?php $id = strtolower("gender-{$gender['value']}") ?>
                             <div class="flex items-center mb-4">
-                                <input id="<?= $id ?>" type="radio" name="gender" value="<?= $gender['value'] ?>" class="size-4">
+                                <input id="<?= $id ?>" type="radio" name="gender" value="<?= $gender['value'] ?>" class="size-4" <?= $student['gender'] === $gender['value'] ? 'checked' : '' ?>>
                                 <label for="<?= $id ?>" class="ms-2"><?= $gender['name'] ?></label>
                             </div>
                         <?php endforeach; ?>
@@ -32,28 +32,28 @@
             </div>
             <div class="space-y-2">
                 <label for="name">Name</label>
-                <input type="text" id="name" name="name" placeholder="Muhamad Rizal Arfiyan" required/>
+                <input type="text" id="name" name="name" placeholder="Muhamad Rizal Arfiyan" value="<?= $student['name'] ?>" required/>
             </div>
             <div class="flex items-center justify-between gap-4">
                 <div class="w-full space-y-2">
                     <label for="location-of-birth">Location of Birth</label>
-                    <input type="text" id="location-of-birth" name="location-of-birth" placeholder="Cimahi" required/>
+                    <input type="text" id="location-of-birth" name="location-of-birth" placeholder="Cimahi" value="<?= $student['location_of_birth'] ?>" required/>
                 </div>
                 <div class="w-full space-y-2">
                     <label for="date-of-birth">Date of Birth</label>
-                    <input type="date" id="date-of-birth" name="date-of-birth" required/>
+                    <input type="date" id="date-of-birth" name="date-of-birth" value="<?= $student['date_of_birth'] ?>" required/>
                 </div>
             </div>
             <div class="space-y-2">
                 <label for="message">Address</label>
-                <textarea id="message" rows="4" name="address" placeholder="Your address here..."></textarea>
+                <textarea id="message" rows="4" name="address" placeholder="Your address here..." ><?= $student['address'] ?></textarea>
             </div>
             <div class="space-y-2">
                 <label for="study-program">Study Program</label>
                 <select id="study-program" name="study-program">
                     <option selected disabled>Select Program Study</option>
                     <?php foreach ($studyPrograms as $program): ?>
-                        <option value="<?= $program['id'] ?>"><?= $program['name'] ?></option>
+                        <option selected="<?= $student['study_program_id'] === $program['id'] ? 'true' : 'false' ?>" value="<?= $program['id'] ?>"><?= $program['name'] ?></option>
                     <?php endforeach; ?>
                 </select>
             </div>
@@ -63,13 +63,13 @@
                     <?php foreach ($hobbies as $hobby): ?>
                         <?php $id = strtolower("hobby-{$hobby['value']}") ?>
                         <div class="flex items-center me-4">
-                            <input id="<?= $id ?>>" type="checkbox" name="hobby[]" value="<?= $hobby['value'] ?>" class="w-4 h-4 rounded">
+                            <input id="<?= $id ?>>" type="checkbox" name="hobby[]" value="<?= $hobby['value'] ?>" <?= in_array($hobby['value'], $studentHobbies) ? 'checked' : '' ?> class="w-4 h-4 rounded">
                             <label for="<?= $id ?>>" class="ms-2 text-sm font-medium text-secondary-900"><?= $hobby['name'] ?></label>
                         </div>
                     <?php endforeach; ?>
                 </div>
             </div>
-            <button type="submit" class="cursor-pointer px-4 py-2 mt-4 text-white bg-primary-500 rounded-md hover:bg-primary-600 transition-colors duration-300">
+            <button type="submit" class="px-4 py-2 cursor-pointer mt-4 text-white bg-primary-500 rounded-md hover:bg-primary-600 transition-colors duration-300">
                 Submit
             </button>
         </form>

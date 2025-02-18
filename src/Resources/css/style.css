@@ -107,7 +107,7 @@
 	input[type="date"],
 	select,
 	textarea {
-		@apply bg-secondary-50 border-secondary-300 block p-2.5 w-full text-sm rounded-lg;
+		@apply bg-secondary-50 border-secondary-300 block p-2.5 w-full text-sm rounded-lg disabled:cursor-not-allowed disabled:opacity-60;
 	}
 
     @keyframes fadeIn {

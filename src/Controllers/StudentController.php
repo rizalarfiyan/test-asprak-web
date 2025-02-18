@@ -73,17 +73,17 @@ class StudentController extends Controller
 		$this->renderHTMX('student/create', $data);
 	}
 
-	public function create()
+	public function create($req)
 	{
 		$studentData = [
-			'nim' => intval($_POST['nim']) ?? 0,
-			'name' => $_POST['name'],
-			'gender' => $_POST['gender'],
-			'location_of_birth' => $_POST['location-of-birth'],
-			'date_of_birth' => $_POST['date-of-birth'],
-			'address' => $_POST['address'],
-			'study_program_id' => $_POST['study-program'],
-			'hobby' => implode(", ", $_POST['hobby'] ?? []),
+			'nim' => intval($req['nim']) ?? 0,
+			'name' => $req['name'],
+			'gender' => $req['gender'],
+			'location_of_birth' => $req['location-of-birth'],
+			'date_of_birth' => $req['date-of-birth'],
+			'address' => $req['address'],
+			'study_program_id' => $req['study-program'],
+			'hobby' => implode(", ", $req['hobby'] ?? []),
 		];
 
 		try {
@@ -91,6 +91,51 @@ class StudentController extends Controller
 			$this->successMessage('Student has been created.');
 		} catch(\Exception $e) {
 			$this->errorMessage('Failed to create student.');
+		} finally {
+			$this->closeModal();
+		}
+	}
+
+	public function htmxUpdate($id)
+	{
+		$student = $this->model('Students')->getById($id);
+		if (!$student) {
+			$this->errorMessage('Student not found.');
+			$this->closeModal();
+			return;
+		}
+
+		$data = $this->masterData();
+		$data['id'] = $id;
+		$data['student'] = $student;
+		$data['studentHobbies'] = explode(", ", $student['hobby']);
+		$this->renderHTMX('student/update', $data);
+	}
+
+	public function update($id, $req)
+	{
+		$hasFound = $this->model('Students')->hasId($id);
+		if (!$hasFound) {
+			$this->errorMessage('Student not found.');
+			$this->closeModal();
+			return;
+		}
+
+		$studentData = [
+			'name' => $req['name'],
+			'gender' => $req['gender'],
+			'location_of_birth' => $req['location-of-birth'],
+			'date_of_birth' => $req['date-of-birth'],
+			'address' => $req['address'],
+			'study_program_id' => $req['study-program'],
+			'hobby' => implode(", ", $req['hobby'] ?? []),
+		];
+
+		try {
+			$this->model('Students')->update($id, $studentData);
+			$this->successMessage('Student has been updated.');
+		} catch(\Exception $e) {
+			$this->errorMessage('Failed to update student.');
 		} finally {
 			$this->closeModal();
 		}
