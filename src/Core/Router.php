@@ -6,50 +6,67 @@ class Router
 {
     protected $routes = [];
 
-    private function addRoute($route, $controller, $action, $method)
-    {
+	protected $defaultValidation = [
+		'id' => '[1-9][0-9]*',
+	];
 
-        $this->routes[$method][$route] = ['controller' => $controller, 'action' => $action];
+    private function addRoute($route, $controller, $action, $method, $validation)
+    {
+        $this->routes[$method][$route] = [
+			'controller' => $controller,
+			'action' => $action,
+			'validation' => $validation ?? $this->defaultValidation,
+		];
     }
 
-    public function get($route, $controller, $action)
-    {
-        $this->addRoute($route, $controller, $action, "GET");
-    }
+	public function get($route, $controller, $action, $validation = null)
+	{
+		$this->addRoute($route, $controller, $action, "GET", $validation);
+	}
 
-    public function post($route, $controller, $action)
-    {
-        $this->addRoute($route, $controller, $action, "POST");
-    }
+	public function post($route, $controller, $action, $validation = null)
+	{
+		$this->addRoute($route, $controller, $action, "POST", $validation);
+	}
 
-    public function put($route, $controller, $action)
-    {
-        $this->addRoute($route, $controller, $action, "PUT");
-    }
+	public function put($route, $controller, $action, $validation = null)
+	{
+		$this->addRoute($route, $controller, $action, "PUT", $validation);
+	}
 
-    public function patch($route, $controller, $action)
-    {
-        $this->addRoute($route, $controller, $action, "PATCH");
-    }
+	public function patch($route, $controller, $action, $validation = null)
+	{
+		$this->addRoute($route, $controller, $action, "PATCH", $validation);
+	}
 
-    public function delete($route, $controller, $action)
-    {
-        $this->addRoute($route, $controller, $action, "DELETE");
-    }
+	public function delete($route, $controller, $action, $validation = null)
+	{
+		$this->addRoute($route, $controller, $action, "DELETE", $validation);
+	}
 
-    public function dispatch()
-    {
-        $uri = strtok($_SERVER['REQUEST_URI'], '?');
-        $method =  $_SERVER['REQUEST_METHOD'];
+	public function dispatch()
+	{
+		$uri = strtok($_SERVER['REQUEST_URI'], '?');
+		$method = $_SERVER['REQUEST_METHOD'];
 
-        if (array_key_exists($uri, $this->routes[$method])) {
-            $controller = $this->routes[$method][$uri]['controller'];
-            $action = $this->routes[$method][$uri]['action'];
+		foreach ($this->routes[$method] as $route => $params) {
+			$pattern = preg_replace_callback('/\{([^\}]+)\}/', function ($matches) use ($params) {
+				$key = $matches[1];
+				return isset($params['validation'][$key]) ? '(' . $params['validation'][$key] . ')' : '([^/]+)';
+			}, $route);
 
-            $controller = new $controller();
-            $controller->$action();
-        } else {
-            include __DIR__ . "/../Views/404.php";
-        }
-    }
+			$pattern = str_replace('/', '\/', $pattern);
+			if (preg_match('/^' . $pattern . '$/', $uri, $matches)) {
+				array_shift($matches);
+				$controller = $params['controller'];
+				$action = $params['action'];
+
+				$controller = new $controller();
+				call_user_func_array([$controller, $action], $matches);
+				return;
+			}
+		}
+
+		include __DIR__ . "/../Views/404.php";
+	}
 }

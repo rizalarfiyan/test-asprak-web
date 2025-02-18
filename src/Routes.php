@@ -8,4 +8,5 @@ $router = new Router();
 $router->get('/', HomeController::class, 'index');
 $router->get('/student', StudentController::class, 'index');
 $router->get('/student/table', StudentController::class, 'table');
+$router->get('/student/{id}', StudentController::class, 'detail');
 $router->dispatch();

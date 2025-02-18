@@ -21,4 +21,9 @@ class StudentController extends Controller
 			'students' => $students,
 		]);
 	}
+
+	public function detail($id)
+	{
+		echo $id;
+	}
 }
