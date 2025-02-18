@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@plugin "@tailwindcss/forms";
 
 @theme {
 	--color-*: initial;
@@ -69,6 +70,81 @@
 @utility container {
     margin-left: auto;
     margin-right: auto;
+}
+
+@layer components {
+    .modal {
+        @apply fixed inset-0 flex flex-col items-center bg-white/50 z-[51] animate-[fadeIn_150ms_ease];
+    }
+
+    .modal > .overlay {
+        @apply fixed inset-0 z-[-1] bg-black/50 cursor-pointer;
+    }
+
+    .modal > .content {
+        @apply relative bg-white rounded-md border border-secondary-200 max-w-lg w-[calc(100%)] p-6 animate-[zoomIn_150ms_ease] mt-[10vh];
+    }
+
+    .modal.closing {
+        @apply animate-[fadeOut_150ms_ease];
+    }
+
+    .modal.closing > .content {
+        @apply animate-[zoomOut_150ms_ease];
+    }
+
+    .modal button.close {
+        @apply absolute p-2 bg-white rounded-full cursor-pointer -right-2 -top-2 text-secondary-300;
+    }
+
+	label,
+	.label {
+		@apply block text-sm font-medium;
+	}
+
+	input[type="text"],
+	input[type="number"],
+	input[type="date"],
+	select,
+	textarea {
+		@apply bg-secondary-50 border-secondary-300 block p-2.5 w-full text-sm rounded-lg;
+	}
+
+    @keyframes fadeIn {
+        0% {
+            opacity: 0;
+        }
+        100% {
+            opacity: 1;
+        }
+    }
+
+    @keyframes fadeOut {
+        0% {
+            opacity: 1;
+        }
+        100% {
+            opacity: 0;
+        }
+    }
+
+    @keyframes zoomIn {
+        0% {
+            transform: scale(0.9);
+        }
+        100% {
+            transform: scale(1);
+        }
+    }
+
+    @keyframes zoomOut {
+        0% {
+            transform: scale(1);
+        }
+        100% {
+            transform: scale(0.9);
+        }
+    }
 }
 
 @include "../../Views";

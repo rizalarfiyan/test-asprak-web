@@ -1,9 +1,9 @@
 CREATE DATABASE IF NOT EXISTS students;
 
 DROP TABLE IF EXISTS students;
-DROP TABLE IF EXISTS program_studies;
+DROP TABLE IF EXISTS study_programs;
 
-CREATE TABLE program_studies
+CREATE TABLE study_programs
 (
     id   INT PRIMARY KEY AUTO_INCREMENT,
     name VARCHAR(100)           NOT NULL
@@ -19,10 +19,10 @@ CREATE TABLE students
     address           VARCHAR(255)           NOT NULL,
     study_program_id  INT                    NOT NULL,
     hobby             VARCHAR(255)           NOT NULL,
-    FOREIGN KEY (study_program_id) REFERENCES program_studies (id)
+    FOREIGN KEY (study_program_id) REFERENCES study_programs (id)
 );
 
-INSERT INTO program_studies (name)
+INSERT INTO study_programs (name)
 VALUES ('D3 - Manajemen Informatika'),
        ('D3 - Teknik Informatika'),
        ('S1 - Akuntansi'),
