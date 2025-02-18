@@ -49,7 +49,7 @@ class Router
             $controller = new $controller();
             $controller->$action();
         } else {
-            throw new \Exception("No route found for URI: $uri");
+            include __DIR__ . "/../Views/404.php";
         }
     }
 }
