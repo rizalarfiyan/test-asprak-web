@@ -23,7 +23,7 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title><?= isset($title) ? "{$title} | {$appName}" : $appName ?></title>
+	<title><?= isset($title) ? "{$title} - {$appName}" : $appName ?></title>
 	<link rel="stylesheet" href="style.css">
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/htmx/2.0.4/htmx.min.js" integrity="sha512-2kIcAizYXhIn8TzUvqzEDZNuDZ+aW7yE/+f1HJHXFjQcGNfv1kqzJSTBRBSlOgp6B/KZsz1K0a3ZTqP9dnxioQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/hyperscript/0.9.10/_hyperscript.min.js" integrity="sha512-awQNhUqpAZSFStlqtXXQgh85OmajVgFCZ5rckAdD4Y7J/LZQo/QuMmkd6ElVNM2UsiUFbhTb9ultQNMj18ku7w==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
@@ -42,4 +42,4 @@
 			</ul>
 		</div>
 	</header>
-	<main class="mt-16 grow container">
+	<main class="mt-16 grow container <?= $mainClass ?? '' ?>">
