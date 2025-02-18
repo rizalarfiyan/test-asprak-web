@@ -29,8 +29,8 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/hyperscript/0.9.10/_hyperscript.min.js" integrity="sha512-awQNhUqpAZSFStlqtXXQgh85OmajVgFCZ5rckAdD4Y7J/LZQo/QuMmkd6ElVNM2UsiUFbhTb9ultQNMj18ku7w==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 </head>
 
-<body class="font-sans antialiased scroll-smooth bg-secondary-50 text-secondary-950 flex flex-col min-h-screen">
-	<header class="fixed top-0 left-0 w-full border-b text-secondary-800 border-secondary-300">
+<body class="font-sans antialiased scroll-smooth bg-secondary-50 text-secondary-800 flex flex-col min-h-screen">
+	<header class="fixed top-0 left-0 w-full border-b text-secondary-800 bg-white z-50 border-secondary-300">
 		<div class="container flex justify-between items-center gap-4">
 			<div class="text-2xl font-semibold">
 				<?= $appName ?>

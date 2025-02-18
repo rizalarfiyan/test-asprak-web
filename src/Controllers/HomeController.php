@@ -21,7 +21,7 @@ class HomeController extends Controller
 			]
 		];
 
-        $this->render('home', [
+        $this->render('index', [
 			'urls' => $urls,
 			'title' => 'Home',
 			'mainClass' => 'flex items-center justify-center'
