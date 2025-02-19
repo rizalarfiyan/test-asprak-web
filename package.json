@@ -10,5 +10,9 @@
   "peerDependencies": {
     "typescript": "^5.0.0"
   },
-  "type": "module"
+  "type": "module",
+  "scripts": {
+    "build": "tailwindcss -i ./src/Resources/css/style.css -o ./public/style.css --minify",
+    "dev": "tailwindcss -i ./src/Resources/css/style.css -o ./public/style.css --minify --watch"
+  }
 }

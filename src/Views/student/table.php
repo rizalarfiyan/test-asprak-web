@@ -1,4 +1,4 @@
-<div class="relative overflow-x-auto">
+<div class="relative overflow-x-auto mb-20">
     <table class="w-full text-sm text-left text-secondary-500">
         <thead class="text-xs uppercase text-secondary-700 bg-secondary-100">
         <tr>

@@ -11,8 +11,8 @@
 			'name' => 'Student',
 		],
 		[
-			'path' => '/program-study',
-			'name' => 'Program Study',
+			'path' => '/study-program',
+			'name' => 'Study Program',
 		]
 	];
 ?>
